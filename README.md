@@ -1,28 +1,103 @@
-# Dating Personality Test
+# Relationship Manual Test
 
-A modern personality test application inspired by [16personalities.com](https://www.16personalities.com/free-personality-test), built with Python Flask backend and vanilla JavaScript frontend. Discover your unique dating personality type through an interactive questionnaire.
+A relationship assessment tool built with Python Flask that measures three key dimensions: **Attachment Style**, **Conflict Style**, and **Connection Style**. Based on research from attachment theory and the Gottman Method.
+
+> 📖 **Discover Your Relationship Manual**: Understand how you bond, fight, and connect in relationships through 8 research-based questions.
+
+---
+
+## 📋 Table of Contents
+
+- [Features](#features)
+- [Quick Start](#quick-start)
+- [The Three Scales](#the-three-scales)
+- [How It Works](#how-it-works)
+- [API Endpoints](#api-endpoints)
+- [Customization](#customization)
+- [Technologies](#technologies)
+
+---
 
 ## Features
 
-- 💝 20-question personality assessment
-- 📊 Scale-based answers (Strongly Disagree to Strongly Agree)
-- 🎨 Beautiful, modern UI with smooth animations
-- 📱 Fully responsive mobile design
-- ⚡ Real-time progress tracking
-- 🎯 Detailed personality results based on 5 dimensions
-- 🔒 RESTful API with CORS support
+- 💝 **Three Research-Based Scales**: Attachment, Conflict, Connection
+- 📊 **Visual Scale Results**: See where you fall on each dimension
+- 🎯 **8 Scenario-Based Questions**: Real relationship situations
+- 🎨 **Beautiful, Modern UI**: Gradient scales with animated markers
+- 📱 **Fully Responsive**: Works perfectly on mobile devices
+- ⚡ **Instant Results**: Immediate feedback with detailed descriptions
+- 🔒 **RESTful API**: Easy to integrate and extend
+
+## The Three Scales & Archetypes
+
+### 1. Attachment Style (Anxious ← Secure → Avoidant)
+
+Measures your bonding patterns in relationships:
+
+- **X - The Pursuer** (Anxious, score < -2): Seeks reassurance, fears abandonment, needs validation
+- **S - The Anchor** (Secure, score -2 to 2): Comfortable with intimacy and independence
+- **V - The Distancer** (Avoidant, score > 2): Values independence, uncomfortable with closeness
+
+### 2. Conflict Style (Defensive ← Healthy → Withdrawing)
+
+Identifies your "Four Horsemen" patterns (Gottman Method):
+
+- **D - The Defender** (Defensive/Critical, score < -2): Counter-attacks, criticism, contempt
+- **H - The Harmonizer** (Healthy, score -2 to 2): Takes responsibility, shows empathy, constructive
+- **W - The Withdrawer** (Stonewalling, score > 2): Withdraws, shuts down, needs space
+
+### 3. Connection Style (Turn Away ← Balanced → High Engagement)
+
+Measures how you respond to "bids" for connection:
+
+- **T - The Turned Away** (Turn Away/Against, score < -2): Dismissive, rejects bids for attention
+- **B - The Balancer** (Balanced, score -2 to 2): Responsive with healthy boundaries
+- **E - The Engager** (High Engagement, score > 2): Seeks deep intimacy, highly responsive
+
+## Your Relationship Type Code
+
+Like MBTI, you get a **3-letter code** representing your relationship style:
+
+**Examples:**
+- **SHB** - Secure Anchor + Healthy Harmonizer + Balanced = Ideal relationship style
+- **XDT** - Anxious Pursuer + Defensive + Turned Away = High conflict potential
+- **VWB** - Avoidant Distancer + Withdrawer + Balanced = Emotionally distant but fair
+
+Your code appears at the top of your results, making it easy to share and discuss your relationship manual.
 
 ## How It Works
 
-The test evaluates your personality across 5 dimensions:
+### Scale-Based Scoring
 
-1. **Energy** - Extraverted vs. Introverted
-2. **Mind** - Intuitive vs. Observant
-3. **Nature** - Thinking vs. Feeling
-4. **Tactics** - Judging vs. Prospecting
-5. **Identity** - Assertive vs. Turbulent
+Each answer moves you along one of the three scales:
 
-Each question is answered on a 7-point scale from "Strongly Disagree" to "Strongly Agree", similar to the 16personalities.com format.
+```python
+{
+    "text": "Your partner hasn't replied in 4 hours...",
+    "answers": [
+        {
+            "text": "Panic. I check my phone repeatedly.",
+            "scales": {
+                "attachment": -3  # Moves toward Anxious
+            }
+        },
+        {
+            "text": "Indifference. I'll do my own thing.",
+            "scales": {
+                "attachment": 3  # Moves toward Avoidant
+            }
+        },
+        {
+            "text": "Secure. I assume they're busy.",
+            "scales": {
+                "attachment": 0  # Stays at Secure
+            }
+        }
+    ]
+}
+```
+
+After all questions, your average position on each scale determines your relationship manual.
 
 ## Project Structure
 
@@ -40,38 +115,25 @@ Each question is answered on a 7-point scale from "Strongly Disagree" to "Strong
 └── README.md
 ```
 
-## Installation
+## Quick Start
 
-1. **Clone the repository** (or use this template):
-   ```bash
-   git clone <your-repo-url>
-   cd dating-personality
-   ```
+```bash
+# Install dependencies
+pip install -r requirements.txt
 
-2. **Create a virtual environment**:
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+# Run the application
+python app.py
 
-3. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+# Open browser to http://localhost:5000
+```
 
-## Running the Application
+See [QUICKSTART.md](QUICKSTART.md) for detailed setup instructions.
 
-1. **Start the Flask server**:
-   ```bash
-   python app.py
-   ```
+## Documentation
 
-2. **Open your browser** and navigate to:
-   ```
-   http://localhost:5000
-   ```
-
-The application will be running on port 5000 by default.
+- **[QUICKSTART.md](QUICKSTART.md)** - Installation and basic usage
+- **[EXAMPLES.md](EXAMPLES.md)** - Detailed question examples and patterns
+- **[SYSTEM_OVERVIEW.md](SYSTEM_OVERVIEW.md)** - Architecture and technical details
 
 ## API Endpoints
 
@@ -80,7 +142,34 @@ The application will be running on port 5000 by default.
 GET /api/questions
 ```
 
-Returns an array of 20 personality test questions.
+Returns 8 questions across 3 sections (attachment, conflict, connection).
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "section": "attachment",
+    "text": "The 'Silence' Trigger: You text your partner...",
+    "answers": [
+      {
+        "id": "1a",
+        "text": "Panic. I check my phone repeatedly...",
+        "scales": {
+          "attachment": -3
+        }
+      },
+      {
+        "id": "1b",
+        "text": "Indifference. I assume they're busy...",
+        "scales": {
+          "attachment": 3
+        }
+      }
+    ]
+  }
+]
+```
 
 ### Submit test answers
 ```http
@@ -91,15 +180,38 @@ Content-Type: application/json
   "answers": [
     {
       "question_id": 1,
-      "score": 2
+      "answer_id": "1a"
     },
-    ...
+    {
+      "question_id": 2,
+      "answer_id": "2b"
+    }
   ],
   "timestamp": "2026-02-13T12:00:00Z"
 }
 ```
 
-Returns personality analysis with scores across all 5 dimensions.
+**Response:**
+```json
+{
+  "id": 1,
+  "scales": {
+    "attachment": -1.67,
+    "conflict": 1.33,
+    "connection": 0.5
+  },
+  "labels": {
+    "attachment": "Secure Attachment",
+    "conflict": "Healthy Conflict Resolution",
+    "connection": "Balanced Connection"
+  },
+  "raw_totals": {
+    "attachment": -5,
+    "conflict": 4,
+    "connection": 1
+  }
+}
+```
 
 ### Get test result
 ```http
@@ -112,22 +224,74 @@ Retrieves a previously submitted test result.
 
 ### Adding More Questions
 
-Edit the `QUESTIONS` array in `app.py` to add or modify questions:
+Edit the `QUESTIONS` array in `app.py`. Each question follows this structure:
 
 ```python
-QUESTIONS = [
-    {
-        "id": 1,
-        "text": "Your question text here",
-        "category": "extraversion"  # or other category
-    },
-    ...
-]
+{
+    "id": 1,
+    "section": "attachment",  # or "conflict" or "connection"
+    "text": "Your scenario question here",
+    "answers": [
+        {
+            "id": "1a",
+            "text": "Answer option text",
+            "scales": {
+                "attachment": -3  # -5 to +5 scale
+            }
+        },
+        {
+            "id": "1b",
+            "text": "Another answer option",
+            "scales": {
+                "attachment": 3  # Opposite end of scale
+            }
+        }
+    ]
+}
 ```
 
-### Customizing the Scoring Algorithm
+### Scale Value Guidelines
 
-The scoring logic is in the `submit_test()` function in `app.py`. Modify this to change how personality types are calculated.
+**Attachment Scale:**
+- `-5 to -3`: Strong anxious attachment
+- `-2 to -1`: Mild anxious lean
+- `0`: Secure attachment
+- `1 to 2`: Mild avoidant lean
+- `3 to 5`: Strong avoidant attachment
+
+**Conflict Scale:**
+- `-5 to -3`: Strong defensive/critical/contempt
+- `-2 to -1`: Mild defensiveness
+- `0`: Healthy conflict resolution
+- `1 to 2`: Mild withdrawal
+- `3 to 5`: Strong stonewalling
+
+**Connection Scale:**
+- `-5 to -3`: Turn away/against bids
+- `-2 to -1`: Mild disengagement
+- `0`: Balanced responsiveness
+- `1 to 2`: Moderately engaged
+- `3 to 5`: Highly engaged/seeking deep intimacy
+
+### Adapting for Other Assessments
+
+This scale-based system works for any assessment with dimensional outcomes:
+
+**Political Compass:**
+```python
+"scales": {
+    "economic": -3,  # Left vs Right
+    "social": 2      # Authoritarian vs Libertarian
+}
+```
+
+**Learning Styles:**
+```python
+"scales": {
+    "abstract_concrete": -2,  # Abstract vs Concrete
+    "active_reflective": 3    # Active vs Reflective
+}
+```
 
 ### Adding a Database
 
@@ -182,15 +346,45 @@ The application features:
 - Real-time progress tracking
 - Detailed results page with personality badges and descriptions
 
+## Key Features of the Scoring System
+
+### ✅ Flexible Question Format
+- Each question can have **2-10+ answer options**
+- No fixed format or scale required
+
+### ✅ Multi-Trait Scoring
+- Each answer contributes points to **multiple traits**
+- Example: "Coffee shop date" → +2 introvert, +1 intellectual, +1 traditional
+
+### ✅ Dynamic Criteria
+- **No predefined traits** - use any trait names you want
+- System automatically tracks and calculates all traits
+
+### ✅ Comprehensive Results
+- Shows **top 5 traits** with rankings
+- Displays **all traits** with scores and percentages
+- Visual bars show relative strength
+
+## Use Cases
+
+This flexible system works for any type of assessment:
+
+- 🎭 **Personality Tests** - Dating style, Myers-Briggs, Big Five
+- 💼 **Career Assessments** - Job fit, leadership style, work preferences
+- 📚 **Learning Styles** - Visual, auditory, kinesthetic preferences
+- 🍕 **Preference Surveys** - Food, travel, lifestyle choices
+- 🎮 **Character Quizzes** - "Which character are you?" style quizzes
+
 ## Future Enhancements
 
-- [ ] Add more questions for deeper analysis
-- [ ] Implement user accounts to save results
-- [ ] Add social sharing features
-- [ ] Create detailed personality type pages
-- [ ] Add compatibility matching between personality types
+- [ ] User accounts to save results
+- [ ] Database integration for persistence
+- [ ] Social sharing features
+- [ ] Detailed trait descriptions and insights
+- [ ] Compatibility matching between users
 - [ ] Export results as PDF
 - [ ] Multi-language support
+- [ ] Admin panel to manage questions
 
 ## License
 
@@ -199,3 +393,9 @@ MIT License - feel free to use this for your projects!
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Questions?
+
+- Check [EXAMPLES.md](EXAMPLES.md) for question patterns
+- See [SYSTEM_OVERVIEW.md](SYSTEM_OVERVIEW.md) for technical details
+- Review the code in `app.py` for implementation details

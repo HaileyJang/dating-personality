@@ -16,33 +16,33 @@
             </header>
             
             <div class="card welcome-card">
-                <h2>Welcome!</h2>
+                <h2>Your Relationship Manual</h2>
                 <p class="welcome-text">
-                    This personality assessment will help you understand your dating style, 
-                    communication preferences, and relationship patterns. Answer honestly 
-                    for the most accurate results.
+                    Discover your attachment style, conflict patterns, and connection preferences. 
+                    Answer honestly based on your past relationships or gut instinct. 
+                    There are no "wrong" answers, only different "manuals."
                 </p>
                 
                 <div class="test-info">
                     <div class="info-item">
                         <span class="info-icon">📝</span>
                         <div>
-                            <strong>20 Questions</strong>
-                            <p>Quick and insightful</p>
+                            <strong>8 Questions</strong>
+                            <p>3 sections, honest answers</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <span class="info-icon">⏱️</span>
                         <div>
-                            <strong>5 Minutes</strong>
-                            <p>Takes less than 5 minutes</p>
+                            <strong>3 Minutes</strong>
+                            <p>Quick self-discovery</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <span class="info-icon">🎯</span>
                         <div>
-                            <strong>Accurate Results</strong>
-                            <p>Based on personality science</p>
+                            <strong>3 Key Scales</strong>
+                            <p>Attachment, Conflict, Connection</p>
                         </div>
                     </div>
                 </div>
@@ -64,36 +64,8 @@
             <div class="card question-card">
                 <h2 class="question-text" id="questionText">Loading question...</h2>
                 
-                <div class="scale-container">
-                    <div class="scale-labels">
-                        <span class="scale-label">Disagree</span>
-                        <span class="scale-label scale-label-center">Neutral</span>
-                        <span class="scale-label">Agree</span>
-                    </div>
-                    
-                    <div class="scale-options" id="scaleOptions">
-                        <button class="scale-btn" data-value="-3" onclick="selectAnswer(-3)">
-                            <span class="scale-text">Strongly Disagree</span>
-                        </button>
-                        <button class="scale-btn" data-value="-2" onclick="selectAnswer(-2)">
-                            <span class="scale-text">Disagree</span>
-                        </button>
-                        <button class="scale-btn" data-value="-1" onclick="selectAnswer(-1)">
-                            <span class="scale-text">Slightly Disagree</span>
-                        </button>
-                        <button class="scale-btn scale-btn-neutral" data-value="0" onclick="selectAnswer(0)">
-                            <span class="scale-text">Neutral</span>
-                        </button>
-                        <button class="scale-btn" data-value="1" onclick="selectAnswer(1)">
-                            <span class="scale-text">Slightly Agree</span>
-                        </button>
-                        <button class="scale-btn" data-value="2" onclick="selectAnswer(2)">
-                            <span class="scale-text">Agree</span>
-                        </button>
-                        <button class="scale-btn" data-value="3" onclick="selectAnswer(3)">
-                            <span class="scale-text">Strongly Agree</span>
-                        </button>
-                    </div>
+                <div class="answers-container" id="answersContainer">
+                    <!-- Answer options will be dynamically inserted here -->
                 </div>
             </div>
         </div>
@@ -101,26 +73,35 @@
         <!-- Results Screen -->
         <div id="resultsScreen" class="screen">
             <header class="results-header">
-                <h1>🎉 Your Personality Results</h1>
+                <h1>📖 Your Relationship Manual</h1>
             </header>
             
-            <div class="card results-card">
-                <div class="personality-type">
-                    <h2>Your Personality Type</h2>
-                    <div class="personality-badges">
-                        <span class="personality-badge" id="energyBadge">-</span>
-                        <span class="personality-badge" id="mindBadge">-</span>
-                        <span class="personality-badge" id="natureBadge">-</span>
-                        <span class="personality-badge" id="tacticsBadge">-</span>
-                        <span class="personality-badge" id="identityBadge">-</span>
+            <div class="results-top-row">
+                <!-- Scale Card (Left) -->
+                <div class="card scale-overview-card">
+                    <h2>Your Scales</h2>
+                    <div class="scale-overview" id="scaleOverview">
+                        <!-- Will be populated by JavaScript -->
                     </div>
                 </div>
                 
-                <div class="personality-description" id="personalityDescription">
+                <!-- Personality Type Card (Right) -->
+                <div class="card personality-type-card">
+                    <div class="personality-type" id="personalityType">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card results-card">
+                <h2 style="text-align: center; margin-bottom: 2rem;">Detailed Breakdown</h2>
+                <div class="traits-list" id="traitsList">
                     <!-- Will be populated by JavaScript -->
                 </div>
                 
-                <button class="btn btn-primary" onclick="restartTest()">Take Test Again</button>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn btn-primary btn-large" onclick="restartTest()">Take Test Again</button>
+                </div>
             </div>
         </div>
 
