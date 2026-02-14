@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Fullstack App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Flask Fullstack Application</h1>
+            <p class="subtitle">A modern template for building web applications</p>
+        </header>
+
+        <main>
+            <!-- Create Item Form -->
+            <section class="card">
+                <h2>Create New Item</h2>
+                <form id="createForm">
+                    <div class="form-group">
+                        <label for="itemName">Name</label>
+                        <input type="text" id="itemName" placeholder="Enter item name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="itemDescription">Description</label>
+                        <textarea id="itemDescription" placeholder="Enter item description" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Item</button>
+                </form>
+            </section>
+
+            <!-- Items List -->
+            <section class="card">
+                <h2>Items List</h2>
+                <div id="itemsList" class="items-container">
+                    <div class="loading">Loading items...</div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Built with Flask & Modern Web Technologies</p>
+        </footer>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Item</h2>
+            <form id="editForm">
+                <input type="hidden" id="editItemId">
+                <div class="form-group">
+                    <label for="editItemName">Name</label>
+                    <input type="text" id="editItemName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editItemDescription">Description</label>
+                    <textarea id="editItemDescription" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Item</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
