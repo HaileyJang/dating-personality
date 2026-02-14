@@ -3,65 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask Fullstack App</title>
+    <title>Dating Personality Test</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>🚀 Flask Fullstack Application</h1>
-            <p class="subtitle">A modern template for building web applications</p>
-        </header>
-
-        <main>
-            <!-- Create Item Form -->
-            <section class="card">
-                <h2>Create New Item</h2>
-                <form id="createForm">
-                    <div class="form-group">
-                        <label for="itemName">Name</label>
-                        <input type="text" id="itemName" placeholder="Enter item name" required>
+        <!-- Welcome Screen -->
+        <div id="welcomeScreen" class="screen active">
+            <header class="welcome-header">
+                <h1>💝 Dating Personality Test</h1>
+                <p class="subtitle">Discover your unique dating personality type</p>
+            </header>
+            
+            <div class="card welcome-card">
+                <h2>Welcome!</h2>
+                <p class="welcome-text">
+                    This personality assessment will help you understand your dating style, 
+                    communication preferences, and relationship patterns. Answer honestly 
+                    for the most accurate results.
+                </p>
+                
+                <div class="test-info">
+                    <div class="info-item">
+                        <span class="info-icon">📝</span>
+                        <div>
+                            <strong>20 Questions</strong>
+                            <p>Quick and insightful</p>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="itemDescription">Description</label>
-                        <textarea id="itemDescription" placeholder="Enter item description" rows="3"></textarea>
+                    <div class="info-item">
+                        <span class="info-icon">⏱️</span>
+                        <div>
+                            <strong>5 Minutes</strong>
+                            <p>Takes less than 5 minutes</p>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Add Item</button>
-                </form>
-            </section>
-
-            <!-- Items List -->
-            <section class="card">
-                <h2>Items List</h2>
-                <div id="itemsList" class="items-container">
-                    <div class="loading">Loading items...</div>
+                    <div class="info-item">
+                        <span class="info-icon">🎯</span>
+                        <div>
+                            <strong>Accurate Results</strong>
+                            <p>Based on personality science</p>
+                        </div>
+                    </div>
                 </div>
-            </section>
-        </main>
+                
+                <button class="btn btn-primary btn-large" onclick="startTest()">Start Test</button>
+            </div>
+        </div>
+
+        <!-- Test Screen -->
+        <div id="testScreen" class="screen">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <div class="progress-text">
+                <span id="currentQuestion">1</span> of <span id="totalQuestions">20</span>
+            </div>
+
+            <div class="card question-card">
+                <h2 class="question-text" id="questionText">Loading question...</h2>
+                
+                <div class="scale-container">
+                    <div class="scale-labels">
+                        <span class="scale-label">Disagree</span>
+                        <span class="scale-label scale-label-center">Neutral</span>
+                        <span class="scale-label">Agree</span>
+                    </div>
+                    
+                    <div class="scale-options" id="scaleOptions">
+                        <button class="scale-btn" data-value="-3" onclick="selectAnswer(-3)">
+                            <span class="scale-text">Strongly Disagree</span>
+                        </button>
+                        <button class="scale-btn" data-value="-2" onclick="selectAnswer(-2)">
+                            <span class="scale-text">Disagree</span>
+                        </button>
+                        <button class="scale-btn" data-value="-1" onclick="selectAnswer(-1)">
+                            <span class="scale-text">Slightly Disagree</span>
+                        </button>
+                        <button class="scale-btn scale-btn-neutral" data-value="0" onclick="selectAnswer(0)">
+                            <span class="scale-text">Neutral</span>
+                        </button>
+                        <button class="scale-btn" data-value="1" onclick="selectAnswer(1)">
+                            <span class="scale-text">Slightly Agree</span>
+                        </button>
+                        <button class="scale-btn" data-value="2" onclick="selectAnswer(2)">
+                            <span class="scale-text">Agree</span>
+                        </button>
+                        <button class="scale-btn" data-value="3" onclick="selectAnswer(3)">
+                            <span class="scale-text">Strongly Agree</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="resultsScreen" class="screen">
+            <header class="results-header">
+                <h1>🎉 Your Personality Results</h1>
+            </header>
+            
+            <div class="card results-card">
+                <div class="personality-type">
+                    <h2>Your Personality Type</h2>
+                    <div class="personality-badges">
+                        <span class="personality-badge" id="energyBadge">-</span>
+                        <span class="personality-badge" id="mindBadge">-</span>
+                        <span class="personality-badge" id="natureBadge">-</span>
+                        <span class="personality-badge" id="tacticsBadge">-</span>
+                        <span class="personality-badge" id="identityBadge">-</span>
+                    </div>
+                </div>
+                
+                <div class="personality-description" id="personalityDescription">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+                
+                <button class="btn btn-primary" onclick="restartTest()">Take Test Again</button>
+            </div>
+        </div>
 
         <footer>
             <p>Built with Flask & Modern Web Technologies</p>
         </footer>
-    </div>
-
-    <!-- Edit Modal -->
-    <div id="editModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Edit Item</h2>
-            <form id="editForm">
-                <input type="hidden" id="editItemId">
-                <div class="form-group">
-                    <label for="editItemName">Name</label>
-                    <input type="text" id="editItemName" required>
-                </div>
-                <div class="form-group">
-                    <label for="editItemDescription">Description</label>
-                    <textarea id="editItemDescription" rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Update Item</button>
-            </form>
-        </div>
     </div>
 
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>

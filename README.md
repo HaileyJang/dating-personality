@@ -1,29 +1,42 @@
-# Flask Fullstack Application Template
+# Dating Personality Test
 
-A modern, simple fullstack web application template built with Python Flask backend and vanilla JavaScript frontend.
+A modern personality test application inspired by [16personalities.com](https://www.16personalities.com/free-personality-test), built with Python Flask backend and vanilla JavaScript frontend. Discover your unique dating personality type through an interactive questionnaire.
 
 ## Features
 
-- 🚀 RESTful API with Flask
-- 💾 CRUD operations (Create, Read, Update, Delete)
-- 🎨 Modern, responsive UI with beautiful design
-- 📱 Mobile-friendly interface
-- ⚡ Fast and lightweight
-- 🔒 CORS enabled for API access
+- 💝 20-question personality assessment
+- 📊 Scale-based answers (Strongly Disagree to Strongly Agree)
+- 🎨 Beautiful, modern UI with smooth animations
+- 📱 Fully responsive mobile design
+- ⚡ Real-time progress tracking
+- 🎯 Detailed personality results based on 5 dimensions
+- 🔒 RESTful API with CORS support
+
+## How It Works
+
+The test evaluates your personality across 5 dimensions:
+
+1. **Energy** - Extraverted vs. Introverted
+2. **Mind** - Intuitive vs. Observant
+3. **Nature** - Thinking vs. Feeling
+4. **Tactics** - Judging vs. Prospecting
+5. **Identity** - Assertive vs. Turbulent
+
+Each question is answered on a 7-point scale from "Strongly Disagree" to "Strongly Agree", similar to the 16personalities.com format.
 
 ## Project Structure
 
 ```
 .
-├── app.py                 # Flask backend application
+├── app.py                 # Flask backend with API endpoints
 ├── requirements.txt       # Python dependencies
 ├── templates/
-│   └── index.html        # Main HTML template
+│   └── index.html        # Single-page application template
 ├── static/
 │   ├── css/
-│   │   └── style.css     # Styles
+│   │   └── style.css     # Modern, responsive styles
 │   └── js/
-│       └── app.js        # Frontend JavaScript
+│       └── app.js        # Frontend logic and API calls
 └── README.md
 ```
 
@@ -62,66 +75,76 @@ The application will be running on port 5000 by default.
 
 ## API Endpoints
 
-### Get all items
+### Get all questions
 ```http
-GET /api/items
+GET /api/questions
 ```
 
-### Get a specific item
-```http
-GET /api/items/{id}
-```
+Returns an array of 20 personality test questions.
 
-### Create a new item
+### Submit test answers
 ```http
-POST /api/items
+POST /api/submit-test
 Content-Type: application/json
 
 {
-  "name": "Item name",
-  "description": "Item description"
+  "answers": [
+    {
+      "question_id": 1,
+      "score": 2
+    },
+    ...
+  ],
+  "timestamp": "2026-02-13T12:00:00Z"
 }
 ```
 
-### Update an item
-```http
-PUT /api/items/{id}
-Content-Type: application/json
+Returns personality analysis with scores across all 5 dimensions.
 
-{
-  "name": "Updated name",
-  "description": "Updated description"
-}
+### Get test result
+```http
+GET /api/results/{id}
 ```
 
-### Delete an item
-```http
-DELETE /api/items/{id}
-```
+Retrieves a previously submitted test result.
 
 ## Customization
 
+### Adding More Questions
+
+Edit the `QUESTIONS` array in `app.py` to add or modify questions:
+
+```python
+QUESTIONS = [
+    {
+        "id": 1,
+        "text": "Your question text here",
+        "category": "extraversion"  # or other category
+    },
+    ...
+]
+```
+
+### Customizing the Scoring Algorithm
+
+The scoring logic is in the `submit_test()` function in `app.py`. Modify this to change how personality types are calculated.
+
 ### Adding a Database
 
-The current implementation uses an in-memory list for data storage. To add a database:
+The current implementation uses in-memory storage. To persist results:
 
-1. Install a database library (e.g., Flask-SQLAlchemy):
+1. Install Flask-SQLAlchemy:
    ```bash
    pip install flask-sqlalchemy
    ```
 
-2. Update `app.py` to include database models and connections.
+2. Update `app.py` to include database models for storing test results.
 
 ### Styling
 
-- Modify `static/css/style.css` to customize the appearance
+- Modify `static/css/style.css` to customize colors, fonts, and layout
 - The design uses CSS custom properties (variables) for easy theming
-
-### Adding Features
-
-- Add new routes in `app.py` for additional API endpoints
-- Update `static/js/app.js` to add frontend functionality
-- Modify `templates/index.html` to add new UI components
+- Current theme uses a pink/purple gradient inspired by dating apps
 
 ## Production Deployment
 
@@ -145,14 +168,33 @@ For production deployment, consider:
 
 ## Technologies Used
 
-- **Backend**: Python 3, Flask
+- **Backend**: Python 3, Flask, Flask-CORS
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
-- **Styling**: Custom CSS with modern design principles
+- **Design**: Custom CSS with gradients, animations, and responsive layout
 - **API**: RESTful architecture
+- **Inspiration**: [16personalities.com](https://www.16personalities.com/free-personality-test)
+
+## Screenshots
+
+The application features:
+- A welcoming landing page with test information
+- Interactive question cards with 7-point scale buttons
+- Real-time progress tracking
+- Detailed results page with personality badges and descriptions
+
+## Future Enhancements
+
+- [ ] Add more questions for deeper analysis
+- [ ] Implement user accounts to save results
+- [ ] Add social sharing features
+- [ ] Create detailed personality type pages
+- [ ] Add compatibility matching between personality types
+- [ ] Export results as PDF
+- [ ] Multi-language support
 
 ## License
 
-MIT License - feel free to use this template for your projects!
+MIT License - feel free to use this for your projects!
 
 ## Contributing
 
